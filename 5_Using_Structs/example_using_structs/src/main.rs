@@ -42,6 +42,7 @@ fn main() {
     );
     println!("Using rect2 again in main after borrowing: {}", rect2.height);
 
+    // Printing out the rectangle struct. We needed to use the annotation #[derive(Debug)]
     println!("Printing the struct Rectangle: {:?}", rect2)
 }
 
