@@ -1,0 +1,1 @@
+/Users/christophercoverdale/Desktop/Projects/rust/5_Using_Structs/method_syntax/target/debug/libmethod_syntax.rmeta: /Users/christophercoverdale/Desktop/Projects/rust/5_Using_Structs/method_syntax/src/main.rs
