@@ -23,7 +23,7 @@ fn main() {
     }
 
     // Using if let pattern.
-    // Syntatic sugare for match, it does not
+    // Syntatic sugar for match, it does not
     // do the exhaustive match for all possibilties.
     if let Some(3) = some_u8_value {
         println!("Three")

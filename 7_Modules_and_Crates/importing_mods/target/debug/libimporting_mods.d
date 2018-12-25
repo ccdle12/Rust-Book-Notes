@@ -1,0 +1,1 @@
+/Users/christophercoverdale/Desktop/Projects/rust/7_Modules_and_Crates/importing_mods/target/debug/libimporting_mods.rmeta: /Users/christophercoverdale/Desktop/Projects/rust/7_Modules_and_Crates/importing_mods/src/main.rs
