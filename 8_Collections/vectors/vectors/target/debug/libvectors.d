@@ -1,0 +1,1 @@
+/Users/christophercoverdale/Desktop/Projects/rust/8_Collections/vectors/vectors/target/debug/libvectors.rmeta: /Users/christophercoverdale/Desktop/Projects/rust/8_Collections/vectors/vectors/src/main.rs
