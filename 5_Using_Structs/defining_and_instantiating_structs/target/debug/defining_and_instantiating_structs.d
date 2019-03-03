@@ -1,1 +1,0 @@
-/Users/christophercoverdale/Desktop/Projects/rust/5_Using_Structs/defining_and_instantiating_structs/target/debug/defining_and_instantiating_structs.dSYM: /Users/christophercoverdale/Desktop/Projects/rust/5_Using_Structs/defining_and_instantiating_structs/src/main.rs

@@ -1,1 +1,0 @@
-/Users/christophercoverdale/Desktop/Projects/rust/5_Using_Structs/method_syntax/target/debug/method_syntax.dSYM: /Users/christophercoverdale/Desktop/Projects/rust/5_Using_Structs/method_syntax/src/main.rs

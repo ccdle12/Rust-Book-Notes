@@ -1,1 +1,0 @@
-/Users/christophercoverdale/Desktop/Projects/rust/5_Using_Structs/example_using_structs/target/debug/example_using_structs.dSYM: /Users/christophercoverdale/Desktop/Projects/rust/5_Using_Structs/example_using_structs/src/main.rs
