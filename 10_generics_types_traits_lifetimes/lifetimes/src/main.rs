@@ -35,6 +35,16 @@ fn main() {
     //     result = longest(string1.as_str(), string2.as_str());
     // }
     // println!("The longest string is {}", result);
+
+    // Lifetime Annotations in Structs.
+    let novel = String::from("Call me Ishmael. Some years ago...");
+    let first_sentence = novel.split('.').next().expect("Could not find a '.'");
+
+    // We create a struct ImportantExcerpt which holds a refernce to a string which is owned by
+    // "let novel".
+    let i = ImportantExcerpt {
+        part: first_sentence,
+    };
 }
 
 /// We need to declare a lifetime parameter.
@@ -49,4 +59,10 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
     } else {
         y
     }
+}
+
+/// By declaring the lifetime annotation at the struct level, this means the struct will not
+/// outlive its field, "part" as part is also a pointer.
+struct ImportantExcerpt<'a> {
+    part: &'a str,
 }
