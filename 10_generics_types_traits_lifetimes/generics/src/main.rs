@@ -16,12 +16,11 @@ impl<T, U> Point<T, U> {
     // mixup takes another Point parameter, extracts the y value from other and x from the origin
     // point and returns a new point object combining both.
     fn mixup<V, W>(self, other: Point<V, W>) -> Point<T, W> {
-        Point{
+        Point {
             x: self.x,
-            y: other.y
+            y: other.y,
         }
     }
-
 }
 
 /// We can have multiple implementations of Point, this one is using explicit declaration of f32,
@@ -46,30 +45,34 @@ fn main() {
     println!("The largest char is {}", result);
 
     /// Using generic structs.
-    let _integer = Point{x: 5, y: 10};
-    let float = Point{x: 0.5, y: 1.2};
+    let _integer = Point { x: 5, y: 10 };
+    let float = Point { x: 0.5, y: 1.2 };
 
     // Must be the same type.
     // let wont_work = Point{x: 0.5, y: 10};
 
     // After adding two different generics, T, U - we can now use different types in the struct.
-    let float_and_integer = Point{x: 0.5, y: 10};
+    let float_and_integer = Point { x: 0.5, y: 10 };
 
     let x = float_and_integer.x();
     let y = float_and_integer.y();
     println!("x is: {}", x);
     println!("y is: {}", y);
 
-    let point_f32 = Point{x: 5.32, y: 10.4};
+    let point_f32 = Point { x: 5.32, y: 10.4 };
     let distance = point_f32.distance_from_origin();
     println!("distance is: {}", distance);
 
     // We will call mixup, combining x from p1 and y from p2.
     let p1 = Point { x: 5, y: 10.4 };
-    let p2 = Point { x: "Hello", y: 'c'};
+    let p2 = Point { x: "Hello", y: 'c' };
     let p3 = p1.mixup(p2);
 
     println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
+
+    // Call largest<T>().
+    let result = largest(&char_list);
+    println!("result using largest generic: {}", result);
 }
 
 /// This fails for now because, we have not implemented the std::cmp::PartialOrd trait.
@@ -84,6 +87,23 @@ fn main() {
 //
 //     largest
 // }
+
+/// We can fix the largest comparison function by implementing a trait which will be PartialOrd.
+fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
+    let mut largest = list[0];
+
+    // i32 and char implement the Copy trait, using generics we have the possibility that we are
+    // using objects that do not implement the Copy trait, therefore we will not be able to move
+    // the &item from the list. We can update the function to only accept types that implement the
+    // Copy trait alongside PartialOrd.
+    for &item in list.iter() {
+        if item > largest {
+            largest = item;
+        }
+    }
+
+    largest
+}
 
 fn largest_i32(list: &[i32]) -> i32 {
     let mut largest = list[0];
