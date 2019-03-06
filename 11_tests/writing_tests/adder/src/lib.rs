@@ -13,6 +13,20 @@ impl Rectangle {
     }
 }
 
+pub struct Guess {
+    value: i32,
+}
+
+impl Guess {
+    pub fn new(value: i32) -> Guess {
+        if value < 1 || value > 100 {
+            panic!("value must be between 1 and 100: {}", value)
+        }
+
+        Guess { value }
+    }
+}
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -40,5 +54,20 @@ mod tests {
         };
 
         assert!(larger.can_hold(&smaller));
+    }
+
+    #[test]
+    fn test_not_equal() {
+        assert_ne!(2, 3);
+    }
+
+    // NOTE: assert_eq! and assert_ne! prints the values, therefore both values must use PartialEq
+    // and Debug trait.
+
+    // Testing for errors, using should_panic.
+    #[test]
+    #[should_panic]
+    fn test_for_errors() {
+        Guess::new(200);
     }
 }
