@@ -79,4 +79,10 @@ mod tests {
             Err(String::from("two plus two does not equal four"))
         }
     }
+
+    #[test]
+    #[ignore]
+    fn expensive_test() {
+        // an expensive test
+    }
 }
