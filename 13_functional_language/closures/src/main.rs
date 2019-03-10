@@ -121,10 +121,17 @@ mod tests {
         // Fn:
         //  Borrows the environment variable imutably
         let x = 4;
+        // At the moment, the closure borrows x.
         let equal_to_x = |z| z == x;
 
         let y = 4;
 
         assert!(equal_to_x(y));
+
+        // test that we can reuse x.
+        assert_eq!(x, 4);
+
+        // Use the "move" keyword to move ownership to a closure.
+        let equal_to_x = move |z: u32| z == x;
     }
 }
