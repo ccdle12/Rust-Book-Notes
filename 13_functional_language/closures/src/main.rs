@@ -106,9 +106,6 @@ mod tests {
         let v1 = c.value(1);
         let v2 = c.value(2);
 
-        // The reason why this fails, is that we have already assigned the value 1 in v1, so when
-        // we try to assign 2, it fails because value is not None in the cacher and returns the
-        // value.
         assert_eq!(v2, 2);
     }
 }
