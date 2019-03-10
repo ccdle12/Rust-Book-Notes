@@ -108,4 +108,23 @@ mod tests {
 
         assert_eq!(v2, 2);
     }
+
+    #[test]
+    fn env_closure() {
+        // Closures can capture variables in it's environment.
+        // Capturing variables from environments is done in 3 ways (using the Fn trait):
+        // FnOnce:
+        //  Consumes the variable it captures from its enclosing scope. The closure takes ownership
+        //  of the environment variable.
+        // FnMut:
+        //  Borrows the environment variable mutably.
+        // Fn:
+        //  Borrows the environment variable imutably
+        let x = 4;
+        let equal_to_x = |z| z == x;
+
+        let y = 4;
+
+        assert!(equal_to_x(y));
+    }
 }
