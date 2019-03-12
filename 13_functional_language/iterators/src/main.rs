@@ -9,13 +9,13 @@ fn main() {
 }
 
 // Iterator is a trait in the standard library.
-trait Iterator {
-    type Item;
-
-    fn next(&mut self) -> Option<Self::Item>;
-
-    // methods with default implementations elided
-}
+// trait Iterator {
+//     type Item;
+//
+//     fn next(&mut self) -> Option<Self::Item>;
+//
+//     // methods with default implementations elided
+// }
 
 #[derive(PartialEq, Debug)]
 struct Shoe {
@@ -28,6 +28,30 @@ fn shoes_in_my_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
     // filter to adapt the iterator to a new iterator that only contains elements that return true.
     // collect will gather the values and return.
     shoes.into_iter().filter(|s| s.size == shoe_size).collect()
+}
+
+struct Counter {
+    count: u32,
+}
+
+impl Counter {
+    fn new() -> Counter {
+        Counter { count: 0 }
+    }
+}
+
+impl Iterator for Counter {
+    type Item = u32;
+
+    fn next(&mut self) -> Option<Self::Item> {
+        self.count += 1;
+
+        if self.count < 6 {
+            Some(self.count)
+        } else {
+            None
+        }
+    }
 }
 
 #[cfg(test)]
@@ -96,5 +120,29 @@ mod tests {
                 },
             ]
         );
+    }
+
+    #[test]
+    fn counter_iterator() {
+        let mut counter = Counter::new();
+
+        assert_eq!(counter.next(), Some(1));
+        assert_eq!(counter.next(), Some(2));
+        assert_eq!(counter.next(), Some(3));
+        assert_eq!(counter.next(), Some(4));
+        assert_eq!(counter.next(), Some(5));
+        assert_eq!(counter.next(), None);
+    }
+
+    #[test]
+    fn using_other_iterator_methods() {
+        // By specifying the Iterator counter and next fn, we can use the other iterator functions.
+        let sum: u32 = Counter::new()
+            .zip(Counter::new().skip(1))
+            .map(|(a, b)| a * b)
+            .filter(|x| x % 3 == 0)
+            .sum();
+
+        assert_eq!(18, sum);
     }
 }
