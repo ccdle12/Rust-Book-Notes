@@ -21,4 +21,12 @@ fn main() {
     // * Rc<T> only allows immutable borrows at compile time.
     // * RefCell<T> allows mutable borrows checked at *run time*, you can
     //   mutate the value inside a RefCell<T> even when it is immutable.
+
+    // An example of the mutable and immutable borrow.
+    // This will return compile time errors of multiple borrows.
+    // let x = 5;
+    // let y = &mut x;
+
+    // TODO: (ccdle12) continue from "A use case for interior mutability: Mock
+    // Objects.
 }
