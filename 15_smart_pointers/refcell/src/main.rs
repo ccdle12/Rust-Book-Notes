@@ -99,6 +99,17 @@ mod tests {
         }
     }
 
+    // Explanation:
+    // * MockMessenger implements Messenger and it's send fn pushes the
+    // received message to a RefCell::new(vec![]).
+    //
+    // * When set value is called, it calls send according to the value, pushes
+    // the message to the sent_messages vector.
+    //
+    // * send in MockMessenger *mutably* borrows self via calling sent_messages
+    // , this is because the implementation of Messenger only allows *immutable*
+    // borrow of self. We use RefCell since we know this respects the borrowing
+    // rules and we don't want to change the Messenger trait to be mutable.
     #[test]
     fn it_sends_over_75_percent_warning() {
         let mock_messenger = MockMessenger::new();
