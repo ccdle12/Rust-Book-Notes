@@ -25,4 +25,6 @@ impl AverageCollection {
         let total: i32 = self.list.iter().sum();
         self.average = total as f64 / self.list.len() as f64;
     }
+
+    //NOTE: NO INHERITANCE IN RUST, rust favours the use of trait objects instead.
 }
