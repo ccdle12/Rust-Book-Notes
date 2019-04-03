@@ -1,3 +1,8 @@
+struct Point {
+    x: i32,
+    y: i32,
+}
+
 fn main() {
     // Matching literals, useful on a particular concrete value.
     let x = 1;
@@ -27,4 +32,26 @@ fn main() {
         1 | 2 => println!("one or two"),
         _ => println!("no match"),
     }
+
+    // Matching ranges with values.
+    let x = 5;
+    match x {
+        1...5 => println!("one through five"),
+        _ => println!(""),
+    }
+
+    // Matching ascii.
+    let x = 'c';
+    match x {
+        'a'...'j' => println!("early ascii letter"),
+        'k'...'z' => println!("late ascii letter"),
+        _ => println!("something else"),
+    }
+
+    // Destructuring structs.
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x: a, y: b } = p;
+    assert_eq!(0, a);
+    assert_eq!(7, b);
 }
