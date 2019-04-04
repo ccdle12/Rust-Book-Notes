@@ -22,14 +22,21 @@ fn handle_connection(mut stream: TcpStream) {
     // Read the bytes from the stream and write it the buffer.
     stream.read(&mut buffer).unwrap();
 
-    // Borrow the buffer and create a string from_utf8_lossy and print.
-    println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
+    // Check if the request is GET.
+    // b"" is a byte string.
+    let get = b"GET / HTTP/1.1\r\n";
+
+    let (status_line, filename) = if buffer.starts_with(get) {
+        ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
+    } else {
+        ("HTTP/1.1 404 NOT FOUND\r\n\r\n", "404.html")
+    };
 
     // Create the contents of the web page.
-    let contents = fs::read_to_string("hello.html").unwrap();
+    let contents = fs::read_to_string(filename).unwrap();
 
     // Return with a response.
-    let response = format!("HTTP/1.1 200 OK\r\n\r\n{}", contents);
+    let response = format!("{}{}", status_line, contents);
 
     // Write the response as bytes over the stream.
     stream.write(response.as_bytes()).unwrap();
