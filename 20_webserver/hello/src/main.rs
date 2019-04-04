@@ -1,3 +1,4 @@
+use std::fs;
 use std::io::prelude::*;
 use std::net::TcpListener;
 use std::net::TcpStream;
@@ -15,7 +16,7 @@ fn main() {
 }
 
 fn handle_connection(mut stream: TcpStream) {
-    // Create a buffer ont he stack capable of reading 512 bytes.
+    // Create a buffer on the stack capable of reading 512 bytes.
     let mut buffer = [0; 512];
 
     // Read the bytes from the stream and write it the buffer.
@@ -24,10 +25,15 @@ fn handle_connection(mut stream: TcpStream) {
     // Borrow the buffer and create a string from_utf8_lossy and print.
     println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
 
-    // Return with a response.
-    let response = "HTTP/1.1 200 OK\r\n\r\n";
+    // Create the contents of the web page.
+    let contents = fs::read_to_string("hello.html").unwrap();
 
+    // Return with a response.
+    let response = format!("HTTP/1.1 200 OK\r\n\r\n{}", contents);
+
+    // Write the response as bytes over the stream.
     stream.write(response.as_bytes()).unwrap();
+
     // Blocks until all bytes are written.
     stream.flush().unwrap();
 }
