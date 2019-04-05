@@ -2,6 +2,8 @@ use std::fs;
 use std::io::prelude::*;
 use std::net::TcpListener;
 use std::net::TcpStream;
+use std::thread;
+use std::time::Duration;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").expect("failed to bind to port 7878");
@@ -11,7 +13,12 @@ fn main() {
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
-        handle_connection(stream);
+        // We can create a thread for each request to handle multiple requests
+        // at once. This has the drawback though, of DoS attacks that can put
+        // a lot of strain on our server.
+        thread::spawn(|| {
+            handle_connection(stream);
+        });
     }
 }
 
@@ -26,7 +33,16 @@ fn handle_connection(mut stream: TcpStream) {
     // b"" is a byte string.
     let get = b"GET / HTTP/1.1\r\n";
 
+    // This is currently a single threaded server, we will simulate this by
+    // adding a sleep, to the /sleep. This will wait 5 seconds, and if we try
+    // to access the webserver using the default /. We will have to wait until
+    // the /sleep endpoint has been served.
+    let sleep = b"GET /sleep HTTP/1.1\r\n";
+
     let (status_line, filename) = if buffer.starts_with(get) {
+        ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
+    } else if buffer.starts_with(sleep) {
+        thread::sleep(Duration::from_secs(5));
         ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
     } else {
         ("HTTP/1.1 404 NOT FOUND\r\n\r\n", "404.html")
