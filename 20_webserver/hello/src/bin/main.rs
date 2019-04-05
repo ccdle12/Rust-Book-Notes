@@ -1,3 +1,4 @@
+use hello::ThreadPool;
 use std::fs;
 use std::io::prelude::*;
 use std::net::TcpListener;
@@ -7,6 +8,8 @@ use std::time::Duration;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").expect("failed to bind to port 7878");
+    // Create a thread pool with 4 threads.
+    let pool = ThreadPool::new(4);
 
     // incoming() returns an iterator that gives us streams.
     // A stream represents a connection to the server.
@@ -16,7 +19,10 @@ fn main() {
         // We can create a thread for each request to handle multiple requests
         // at once. This has the drawback though, of DoS attacks that can put
         // a lot of strain on our server.
-        thread::spawn(|| {
+        // thread::spawn(|| {
+        // handle_connection(stream);
+        // });
+        pool.execute(|| {
             handle_connection(stream);
         });
     }
